@@ -1,0 +1,4 @@
+.gradle/
+build/
+*.sqlite3
+*.sqlite3-*

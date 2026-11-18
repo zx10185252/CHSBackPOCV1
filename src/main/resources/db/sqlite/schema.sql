@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS channel_request (
+    id VARCHAR(36) PRIMARY KEY NOT NULL,
+    subject VARCHAR(120) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    created_at VARCHAR(30) NOT NULL
+);

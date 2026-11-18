@@ -1,0 +1,8 @@
+// This project resolves the Spring Boot plugin and application dependencies from Maven Central.
+pluginManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'CHSBackPOCV1'

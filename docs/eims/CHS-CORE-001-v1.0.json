@@ -1,0 +1,49 @@
+{
+  "status": "POC_SAMPLE",
+  "messageId": "CHS-CORE-001",
+  "version": "1.0",
+  "name": "상품 기본정보 조회",
+  "consumer": "채널 백엔드",
+  "provider": "계정계",
+  "transport": {
+    "protocol": "HTTP",
+    "method": "POST",
+    "path": "/core/v1/product-inquiries",
+    "contentType": "application/json"
+  },
+  "requestFields": [
+    {"path": "header.messageId", "type": "string", "required": true, "constant": "CHS-CORE-001"},
+    {"path": "header.version", "type": "string", "required": true, "constant": "1.0"},
+    {"path": "header.requestId", "type": "uuid", "required": true, "description": "호출 단위 상관관계 ID"},
+    {"path": "body.productCode", "type": "string", "required": true, "pattern": "^[A-Z0-9_-]{1,20}$"}
+  ],
+  "responseFields": [
+    {"path": "header", "type": "object", "required": true, "description": "요청 헤더를 그대로 반환"},
+    {"path": "resultCode", "type": "string", "required": true},
+    {"path": "body.productCode", "type": "string", "requiredWhen": {"resultCode": "0000"}, "description": "요청 상품 코드와 동일"},
+    {"path": "body.productName", "type": "string", "requiredWhen": {"resultCode": "0000"}}
+  ],
+  "resultCodes": {
+    "0000": {"meaning": "조회 성공", "upstreamHttpStatus": 200, "channelHttpStatus": 200},
+    "1001": {"meaning": "상품 없음", "upstreamHttpStatus": 200, "channelHttpStatus": 404}
+  },
+  "examples": {
+    "request": {
+      "header": {
+        "messageId": "CHS-CORE-001",
+        "version": "1.0",
+        "requestId": "2fc49ed5-c370-45be-8d34-c5bb5dccdcf0"
+      },
+      "body": {"productCode": "SAMPLE-DEPOSIT"}
+    },
+    "response": {
+      "header": {
+        "messageId": "CHS-CORE-001",
+        "version": "1.0",
+        "requestId": "2fc49ed5-c370-45be-8d34-c5bb5dccdcf0"
+      },
+      "resultCode": "0000",
+      "body": {"productCode": "SAMPLE-DEPOSIT", "productName": "POC 예금 상품"}
+    }
+  }
+}
